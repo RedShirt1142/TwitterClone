@@ -25,6 +25,21 @@
     max-width: 600px;
 }
 
+/* screen and ()←andと()の間にはスペース必須。また、計算式にもスペースを入れるべき。
+@media screenで、その{}内に書いたデザインが適用される。portfolioのときは最後に一気に書いたけど
+今回は部分ごとにプログラムを書いている。*/
+@media screen and (max-width: 500px){
+    .container{
+        padding:0;
+    }
+    .side{
+        width:60px;
+    }
+    .main{
+        width:calc(100% - 60px);
+    }
+}
+
 .nav-link {
     padding: .3rem .3rem
 }
@@ -84,6 +99,19 @@ bootstrapで初期設定が黒になっているので、白に変えている�
     width: 60%;
     border-radius: 50%;
     border: 0.2px solid #aaa;
+}
+
+@media screen and (max-width: 500px){
+    .side .side-inner img{
+        width:70%;
+        margin-bottom:15px;
+    }
+    .side .side-inner img.icon{
+        width:85%;
+    }
+    .side .side-inner img.post-tweet{
+        width:90%;
+    }
 }
 
 /*
@@ -223,4 +251,14 @@ bootstrapで初期設定が黒になっているので、白に変えている�
     width: 25px;
     padding-top: 2px;
     color: #444;
+}
+
+@media screen and (max-width: 500px){
+    .home .tweet-list .tweet .user{
+        width:60px;
+        padding:5px 10px 10px 5px;
+    }
+    .bottom-area .btn{
+        margin-top:10px;
+    }
 }
