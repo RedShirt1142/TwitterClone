@@ -112,9 +112,19 @@ function convertToDayTimeAgo(string $datetime){
     <!-- getbootstrap.jp(または.com)からjsDelivrの欄からCSSonlyをコピーして、リンクタグのcssの上に貼り付ける -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo HOME_URL;?>Views/css/style.css">
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous" defer></script>
+    <!-- JavaScript Bundle with Popper -->  <!-- Javaのbootstrapはjqueryに依存してるので、jqueryを先に書く。 -->
+    <!-- 最新版を使いたいときはサイトから最新版のコードを引用すること。code.jquery.com  getbootstrap.jp -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" defer></script>
+    <!-- いいね用JS -->
+    <script src="<?php echo HOME_URL; ?>Views/js/likes.js" defer></script>
+    <!-- defer属性を付与すると、JSよりHTMLの解析の方が先にされるので、サイトの表示が速くなる。ただし、通常通り表示したいJSも遅く表示されることになるので、defer属性に依存していた場合エラーになる可能性があるので注意が必要 -->
+
     <title>ホーム画面 / Twitterクローン</title>
     <meta name="description" content="ホーム画面です">
 </head>
+
 <body class="home">
     <div class="container">   <!-- divタグを使うときのテクニック div.クラス名 とすることで、一気にクラス名までできる -->
         <div class="side"> <!-- div.side でこうなる-->
@@ -129,7 +139,13 @@ function convertToDayTimeAgo(string $datetime){
                     <li class="nav-item"><a href="notification.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-notification.svg" alt=""></a></li>
                     <li class="nav-item"><a href="profile.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-profile.svg" alt=""></a></li>
                     <li class="nav-item"><a href="post.php" class="nav-link"><img src="<?php echo HOME_URL;?>Views/img/icon-post-tweet-twitterblue.svg" alt="" class="post-tweet"></a></li>
-                    <li class="nav-item my-icon"><img src="<?php echo HOME_URL;?>Views/img_uploaded/user/sample-person.jpg" alt=""></li>
+                    <li class="nav-item my-icon"><img src="<?php echo HOME_URL;?>Views/img_uploaded/user/sample-person.jpg" alt="" class="js-popover"
+                    data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-html="true"
+                    data-bs-content="<a href='profile.php'>プロフィール</a><br><a href='sign-out.php'>ログアウト</a>"
+                    ></li>
+                    <!-- データオプションでpopoverの処理にオプションを指定できる。containerオプションでbodyを指定すると、親要素のスタイルの影響を受けにくくなる -->
+                    <!-- data-bs-toggle="popover"を書かないとpopoverは動かない。placementオプションにrightを指定してポップを右側に表示。 -->
+                    <!-- htmlオプションをtrueにすることで、その後のコンテントオプションをHTML可する -->
                 </ul>
             </div>
         </div>
@@ -190,8 +206,9 @@ function convertToDayTimeAgo(string $datetime){
                             <img src="<?php echo buildImagePath($view_tweet['tweet_image_name'],'tweet');?>" alt="" class="post-image">
                         <?php endif;?>
 
-                            <div class="icon-list">
-                            <div class="like">
+                        <div class="icon-list">
+                            <div class="like js-like" data-like-id="<?php echo htmlspecialchars($view_tweet['like_id']);?>">
+                            <!-- js-likeクラスをつけることで、作ったjs-like関数を使っている -->
                                 <?php  //いいねがあるかないかで処理を分ける。
                                 if (isset($view_tweet['like_id'])){ // isset関数は、変数があればtrue、無ければfalseを返す
                                     //いいねがあるときは青のハート
@@ -203,7 +220,7 @@ function convertToDayTimeAgo(string $datetime){
                                 }
                                 ?>
                             </div>
-                            <div class="like-count"><?php echo htmlspecialchars($view_tweet['like_count']); ?></div>
+                            <div class="like-count js-like-count"><?php echo htmlspecialchars($view_tweet['like_count']); ?></div>
                         </div>
                     </div>
                 </div>
@@ -212,5 +229,12 @@ function convertToDayTimeAgo(string $datetime){
             <?php endif; ?>
         </div>
     </div>
+    <!-- HTML内にJavaScriptを書くときは、/bodyタグの前に書くべき -->
+    <script> //第一引数にDOMContentLoadedを書くと、ブラウザがHTMLの解析を完了した時点で第二引数の関数が実行される。
+        document.addEventListener('DOMContentLoaded', function(){
+            $('.js-popover').popover();
+            // popoverは、クリックされて初めて起動する機能。画像とかに重ねたら出るやつじゃない。HAHAHA
+        },false);
+    </script>
 </body>
 </html>
