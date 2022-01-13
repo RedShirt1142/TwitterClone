@@ -22,7 +22,7 @@
             <input type="text" class="form-control" name="nickname" placeholder="ニックネーム" maxlength="50" required autofocus>
             <input type="text" class="form-control" name="name" placeholder="ユーザー名、例)techis132" maxlength="50" required>
             <input type="email" class="form-control" name="email" placeholder="メールアドレス" maxlength="254" required>
-            <input type="password" class="form-control" name="password" placeholder="パスワード" minlength="4" maxlength="50" required>
+            <input type="password" class="form-control" name="password" placeholder="パスワード" minlength="4" maxlength="128" required>
             <!-- w-100はwidth:100%、btn-lgは大きいボタン -->
             <button class="w-100 btn btn-lg" type="submit">登録する</button>
             <!-- mt-3 mb-2はmarginのtop1rem、bottom0.5rem -->

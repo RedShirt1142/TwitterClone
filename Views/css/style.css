@@ -3,12 +3,15 @@
 →まず適当に編集してctrl+sで保存。→更新して、cssファイル名に緑のちょんが付いてたらおｋ。
 →cssを反映させたいクラス名を書き出す。→Elementsでhtmlを見る。→cssで書き出したクラスを選択する
 →cssを書き込む。→反映される。やったね！→検証のcssファイル名の右上に＊が付いてたら、ctrl+sで保存すること！*/
+/*今回のようにたくさんのページがあっても、style.cssは一つで大丈夫みたい。
+つどつどデベロッパーツールで編集していく。当たり前だけどタグやクラス名の間違いには注意。*/
 /*
 全体
 ****/
-html{
-    height:100%;
+html {
+    height: 100%;
 }
+
 .container {
     display: flex;
     /*今回の場合、横並びになる*/
@@ -60,9 +63,19 @@ html{
     color: #fff;
 }
 
+.btn-reverse {
+    background-color: #fff;
+    color: #1af;
+    border: 1px solid #1af;
+}
+
+.btn-reverse:hover {
+    color: #1af;
+}
+
 a {
-    font-size:13px;
-    color:#1af;
+    font-size: 13px;
+    color: #1af;
     text-decoration: none;
 }
 
@@ -276,39 +289,96 @@ bootstrapで初期設定が黒になっているので、白に変えている�
 /*
 会員登録(ログイン画面共用)
 ****/
-body.signup{
+body.signup {
     display: flex;
     align-items: center;
     padding-top: 40px;
     padding-bottom: 40px;
     height: 100%;
 }
-.signup{
+
+.signup {
     background-color: #123;
     color: #fff;
 }
-.signup .form-signup{
+
+.signup .form-signup {
     width: 100%;
     max-width: 330px;
     padding: 15px;
     margin: auto;
 }
-.signup .logo-white{
+
+.signup .logo-white {
     margin-bottom: 30px;
     width: 50px;
 }
-.signup h1{
+
+.signup h1 {
     font-size: 20px;
     margin-bottom: 20px;
 }
-.signup input{
+
+.signup input {
     margin-bottom: 10px;
     background-color: #123;
     border-color: #456;
     color: #fff;
 }
-.signup input:focus{
+
+.signup input:focus {
     background-color: #123;
     border-color: #1af;
     color: #fff;
+}
+
+/*
+ユーザー
+****/
+.profile .profile-area {
+    padding: 25px;
+}
+
+.profile .profile-area .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.profile .profile-area .top .user {
+    width: 30%;
+    padding: 5px 15px 10px 0;
+}
+
+.profile .profile-area .top .user img {
+    width: 100%;
+    border-radius: 50%;
+    border: 3px solid rgb(235,238,240);
+}
+
+.profile .profile-area .top button {
+    margin-bottom: 20px;
+}
+
+.profile .profile-area .name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.profile .profile-area .follow-follower {
+    display: flex;
+    padding: 15px 0 10px 0;
+}
+
+.profile .profile-area .follow-follower .follow-count {
+    width: 30px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.profile .profile-area .follow-follower .follow-text {
+    width: 100px;
+    font-size: 16px;
+    margin-right: 30px;
+    color: #778;
 }
