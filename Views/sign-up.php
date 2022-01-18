@@ -1,11 +1,4 @@
-<?php
-//includeで、別ファイルを読み込む。onceをつけると一度だけの設定になる。
-//設定関連を読み込む
-include_once('../config.php');
-//便利な関数も読み込む
-include_once('../util.php');
-?>
-
+<!-- アプリケーション設定はコントローラーで読み込むので、こっちは削除 -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>

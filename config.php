@@ -8,3 +8,10 @@ define('HOME_URL','http://localhost:8888/TwitterClone/');
 //defineは定数を指定する関数。URLをHOME_URLという名前の定数にしている。呼び出すときはHOME_URLだけでいい。
 //http~localhostは省略可。というか入れたら動かなかったのだが･･･調べたらなんかうまくできた。よくわからんが、8888が必要だったみたい。
 //置換(../を上で作った定数に変更。)編集→置換→上に置換する文字列、下に変更後の文字列を記入。一括置換が可能。
+
+// データベースの接続情報
+define('DB_HOST' , 'localhost');
+define('DB_USER' , 'root');
+define('DB_PASSWORD' , 'root');
+define('DB_NAME' , 'twitter_clone');
+
