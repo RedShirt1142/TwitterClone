@@ -78,6 +78,11 @@ $view_tweets = [
             <div class="ditch"></div>
 
             <!-- つぶやき一覧エリア -->
+            <!-- HTML内でif文などを書くとき 
+                 php if(条件) : ?
+                 php else : ?
+                 php endif; ?
+                のように、:と;を使うと、{}を使わなくて良くなる。スマート。 -->
             <?php if (empty($view_tweets)) : ?>
                 <p class="p-3">ツイートがありません</p>
                 <!-- p-3はブートストラップのやつで、padding-3ってこと。全方向に1remの余白を空ける -->
