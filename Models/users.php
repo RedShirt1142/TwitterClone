@@ -3,9 +3,8 @@
 // ユーザーデータを処理
 //////////////////////////////
 
-// sign-upコントローラーに関数を実装して会員登録画面を完成させる。
-
 /**
+ * 会員登録のユーザー関数
  * 
  * @param array $data
  * @return bool
@@ -59,4 +58,69 @@ function createUser(array $data)
     $mysqli -> close();
 
     return $response;
+}
+
+/**
+ *  ユーザー情報取得 : ログインチェックのユーザー関数
+ * 
+ * @param string $email
+ * @param string $password
+ * @return array|false
+ */
+function findUserAndCheckPassword(string $email, string $password){
+    // DB接続
+    $mysqli = new mysqli(DB_HOST , DB_USER , DB_PASSWORD , DB_NAME);
+
+    // 接続エラーがある場合->処理停止
+    if ($mysqli -> connect_errno){
+        echo 'MySQLの接続に失敗しました。 :' . $mysqli -> connect_errno . "\n";
+        exit;
+    }
+
+    // 入力値をエスケープ
+    // real_escape_string関数で$emailにSQL文が入っていても実行されないようにする
+    $email = $mysqli->real_escape_string($email);
+
+    // SQLクエリを作成
+    // - 外部からのリクエストは何が入ってくるかわからないので、必ずエスケープしたものをクオートで囲む
+    // SQLインジェクション対策のため、エスケープした$emailを''または""で囲む。
+    // ' . $email . 'を""で囲ってる。
+    // 会員登録で使用したプレイスホルダー(?,?,?,?)形式で後から値を入れる形なら、エスケープは不要
+    $query = 'SELECT * FROM users WHERE email = "' . $email . '"';
+
+    // クエリ実行
+    $result = $mysqli->query($query);
+
+    // クエリ実行に失敗した場合->return
+    if(!$result){
+        //MySQL処理中にエラー発生
+        echo 'エラーメッセージ: ' . $mysqli->errno . "\n";
+        $mysqli->close();
+        return false;
+    }
+
+    // ユーザー情報を取得
+    // fetch_arrayメソッドはレコードを1件取得する
+    // fetch_array(MYSQLI_ASSOC)は、連想配列として取得される。他にMYSQLI_NUMとBOTHがある。
+    // 新しめの情報が見つからなかった。多分変わってない？
+    $user = $result->fetch_array(MYSQLI_ASSOC);
+    // ユーザーが存在しない場合->return
+    if(!$user){
+        $mysqli->close();
+        return false;
+    }
+
+    // パスワードチェック、不一致の場合->return
+    // password_verify関数で
+    // 入力されたパスワードとデータベースに保存されたパスワードのハッシュ値を比較して一致するかチェック
+    // 不一致だった場合にfalseを返す。!がついてるので、一致しない場合って文。
+    if(!password_verify($password, $user['password'])){
+        $mysqli->close();
+        return false;
+    }
+
+    // DB接続を解放
+    $mysqli->close();
+
+    return $user;
 }

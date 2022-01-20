@@ -65,3 +65,67 @@ function convertToDayTimeAgo(string $datetime){
 
     return (int)$time . $unit;
 }
+
+/**
+ * ユーザー情報をセッションに保存する関数
+ * 
+ * @param array $user
+ * @return void
+ */
+function saveUserSession(array $user){
+    // セッションを開始していない場合
+    // session_statusは現在のセッションの状態を確認
+    // PHP_SESSION_NONE セッションが有効だけどセッションが存在しないときのsession_statusの値
+    if(session_status() === PHP_SESSION_NONE){
+        // セッション開始
+        session_start();
+    }
+
+    $_SESSION['USER'] = $user;
+}
+
+/**
+ * ユーザー情報をセッションから削除する関数
+ * 
+ * @return void
+ */
+function deleteUserSession(){
+    // セッションを開始していない場合
+    if (session_status() === PHP_SESSION_NONE){
+        // セッションを開始
+        session_start();
+    }
+
+    // セッションのユーザー情報を削除
+    // unsetはPHPのsession6.phpあたりを参照のこと
+    unset($_SESSION['USER']);
+}
+
+/**
+ * セッションのユーザー情報を取得
+ * 
+ * @return array|false
+ */
+function getUserSessein(){
+    // セッションを開始していない場合
+    if (session_status() === PHP_SESSION_NONE){
+        // セッションを開始
+        session_start();
+    }
+
+    if(!isset($_SESSION['USER'])){
+        // セッションにユーザー情報が無い
+        return false;
+    }
+
+    $user = $_SESSION['USER'];
+
+    // 画像のファイル名からファイルのURLを取得
+    // $user['image_name']が無いとき、nullをつっこむ。
+    if(!isset($user['image_name'])){
+        $user['image_name'] = null;
+    }
+    $user['image_path'] = buildImagePath($user['image_name'], 'user');
+
+    return $user;
+}
