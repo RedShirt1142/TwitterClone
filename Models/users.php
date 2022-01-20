@@ -7,7 +7,7 @@
  * 会員登録のユーザー関数
  * 
  * @param array $data
- * @return bool
+ * @return bool  true|false
  */
 function createUser(array $data)
 {
@@ -89,9 +89,11 @@ function findUserAndCheckPassword(string $email, string $password){
     $query = 'SELECT * FROM users WHERE email = "' . $email . '"';
 
     // クエリ実行
+    // $resultにユーザー情報が入る。
     $result = $mysqli->query($query);
 
     // クエリ実行に失敗した場合->return
+    // if(!$result)は、ユーザー情報が無い場合ということ。
     if(!$result){
         //MySQL処理中にエラー発生
         echo 'エラーメッセージ: ' . $mysqli->errno . "\n";
