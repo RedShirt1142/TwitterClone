@@ -18,7 +18,7 @@ function createUser(array $data)
     // 接続エラーがあった場合、connect_errnoにint型で数字が入ってくる。エラーナンバー
     // データベースが動いていないとサービスが動かないので、接続に失敗したらすぐに処理停止させるのが無難
     if ($mysqli -> connect_errno){
-        echo 'MySQLの接続に失敗しました。 :' . $mysqli -> connect_errno . "\n";
+        echo 'MySQLの接続に失敗しました。 :' . $mysqli -> connect_error . "\n";
         exit;
     }
 
@@ -48,7 +48,7 @@ function createUser(array $data)
     // execute関数はbool型(true/false)で結果が出る
     // →$responseにはtrueかfalseが入る
     if ($response === false){
-        echo 'エラーメッセージ : ' . $mysqli->errno . "\n";
+        echo 'エラーメッセージ : ' . $mysqli->error . "\n";
     }
 
     // DB接続を解放
@@ -73,7 +73,7 @@ function findUserAndCheckPassword(string $email, string $password){
 
     // 接続エラーがある場合->処理停止
     if ($mysqli -> connect_errno){
-        echo 'MySQLの接続に失敗しました。 :' . $mysqli -> connect_errno . "\n";
+        echo 'MySQLの接続に失敗しました。 :' . $mysqli -> connect_error . "\n";
         exit;
     }
 
@@ -96,7 +96,7 @@ function findUserAndCheckPassword(string $email, string $password){
     // if(!$result)は、ユーザー情報が無い場合ということ。
     if(!$result){
         //MySQL処理中にエラー発生
-        echo 'エラーメッセージ: ' . $mysqli->errno . "\n";
+        echo 'エラーメッセージ: ' . $mysqli->error . "\n";
         $mysqli->close();
         return false;
     }
