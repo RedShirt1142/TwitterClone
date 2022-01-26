@@ -74,7 +74,7 @@ function findTweets(array $user){
             U.nickname AS user_nickname,
             U.image_name AS user_image_name,
             -- ログインユーザーがいいね！したか(いいね！している場合、値が入る)
-            L.id AS likes_id,
+            L.id AS like_id,
             -- いいね！数 相関サブクエリ 処理が重くなることがある
             (SELECT COUNT(*) FROM likes WHERE status = 'active' AND tweet_id = T.id) AS like_count
         FROM -- カラム名やテーブル名 AS 名前 とすると、別名をつけることができる。
@@ -84,15 +84,16 @@ function findTweets(array $user){
             users AS U ON U.id = T.user_id AND U.status = 'active'
             -- いいね！テーブルをlikes.tweet_idとtweets.idで紐付ける
             LEFT JOIN
-            likes AS L ON L.tweet_id = T.id AND L.status = 'active' AND L.user_id ='$login_user_id'
+            likes AS L ON L.tweet_id = T.id AND L.status = 'active' AND L.user_id = '$login_user_id'
 
         WHERE -- T.status tweetsテーブルのステータス
             T.status = 'active'
     SQL;
 
     // クエリ実行
-    $result = $mysqli->query($query);
-    if ($result){
+    //$result = $mysqli->query($query);
+    //if ($result){
+    if ($result = $mysqli->query($query)) {
         // データを配列で受け取る fetch_all 実行結果から、全てのレコードを取得する(配列)
         $response = $result->fetch_all(MYSQLI_ASSOC);
     } else {

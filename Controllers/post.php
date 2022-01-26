@@ -12,7 +12,7 @@ include_once '../util.php';
 include_once '../Models/tweets.php';
 
 // ログインチェック
-$user = getUserSessein();
+$user = getUserSession();
 if (!$user){
     // ログインしていない($userに値が無い)→ログイン画面へ遷移
     header('Location: ' .HOME_URL . 'Controllers/sign-in.php');

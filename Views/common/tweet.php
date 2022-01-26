@@ -20,7 +20,7 @@
         <?php endif; ?>
 
         <div class="icon-list">
-            <div class="like js-like" data-like-id="<?php echo htmlspecialchars($view_tweet['like_id']); ?>">
+            <div class="like js-like" data-tweet-id="<?php echo htmlspecialchars($view_tweet['tweet_id']); ?>" data-like-id="<?php echo htmlspecialchars($view_tweet['like_id']); ?>">
                 <!-- js-likeクラスをつけることで、作ったjs-like関数を使っている -->
                 <?php  //いいねがあるかないかで処理を分ける。
                 if (isset($view_tweet['like_id'])) { // isset関数は、変数があればtrue、無ければfalseを返す

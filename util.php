@@ -106,7 +106,7 @@ function deleteUserSession(){
  * 
  * @return array|false
  */
-function getUserSessein(){
+function getUserSession(){
     // セッションを開始していない場合
     if (session_status() === PHP_SESSION_NONE){
         // セッションを開始
